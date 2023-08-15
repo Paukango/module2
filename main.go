@@ -30,5 +30,5 @@ func main() {
 	b = b * 2.2369
 	EuropeanVelocity := b
 	fmt.Print("Скорость в км/ч - ", AmericanVelocity, "\n", "Скорость в миль/ч - ", math.Floor(EuropeanVelocity*100)/100)
-	// писььs
+
 }
