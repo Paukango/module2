@@ -2,22 +2,34 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"math"
 	"strconv"
 )
 
 func main() {
 	// первая
-	var strng string = "104"
-	var num int = 35
-	job1, err := strconv.Atoi(strng)
-	if err != nil {
-		fmt.Printf("Кал говн")
+	var str string
+
+	for {
+		fmt.Println("Введите число")
+		fmt.Scan(&str)
+		var num int = 35
+		job1, err := strconv.Atoi(str)
+		if err != nil {
+			log.Println(err)
+			fmt.Println("Некорректный формат данных")
+			fmt.Println("Введите корректное значение")
+		} else {
+			job2 := strconv.Itoa(num)
+			fmt.Printf("%T \n", job1)
+			fmt.Printf("%T \n", job2)
+			fmt.Print("------------------- \n")
+			break
+		}
+
 	}
-	job2 := strconv.Itoa(num)
-	fmt.Printf("%T \n", job1)
-	fmt.Printf("%T \n", job2)
-	fmt.Print("------------------- \n")
+
 	// вторая
 	var a float64
 	var b float64
