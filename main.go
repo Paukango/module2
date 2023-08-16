@@ -4,39 +4,71 @@ import "fmt"
 
 func main() {
 
-	var i int
-	reader := map[string]map[string][]string{
+	readers := map[string]map[string][]string{
 
-		"Читатель 1": {
-			"Книга 1": []string{"Издание 2022"},
-			"Книга 2": []string{"Издание 2021"},
-			"Книга 3": []string{"Издание 2020"},
-			"Книга 4": []string{"Издание 2020"},
+		"Петя": {
+			"Книги":        []string{"Жук", "Паук"},
+			"Пер. издания": []string{"Старик", "Дед", "Прадед"},
 		},
-		"Читатель 2": {
-			"Книга 1": []string{"Издание 2023"},
-			"Книга 2": []string{"Издание 2020"},
-			"Книга 3": []string{"Издание 2029"},
+		"Вова": {
+			"Книги":        []string{},
+			"Пер. издания": []string{"Старик", "Дед", "Прадед"},
 		},
-		"Читатель 3": {
-			"Книга 1": []string{"Издание 2011"},
-			"Книга 2": []string{"Издание 2012"},
-			"Книга 3": []string{"Издание 2013"},
+		"Леша": {
+			"Книги":        []string{"Дук", "Дудк"},
+			"Пер. издания": []string{"пропо"},
+		},
+		"Сережа": {
+			"Книги":        []string{},
+			"Пер. издания": []string{},
 		},
 	}
 
-	fmt.Println("Всего читателей - ", len(reader))
-	for range reader["Читатель 1"] {
-		i++
-	}
+	//fmt.Println(countReadersWithBooks(readers))
 
-	for range reader["Читатель 2"] {
-		i++
-	}
+	fmt.Println(countBooksEvenReader(readers))
 
-	for range reader["Читатель 3"] {
-		i++
+}
+
+////func countReadersWithBooks(readers map[string]map[string][]string) (count int, err error) {
+//
+//	var g int
+//	for _, v := range readers {
+//
+//		for _, y := range v {
+//			//fmt.Println(x, y, "---")
+//			for range y {
+//				g++
+//
+//			}
+//		}
+//
+//	}
+//	count = g
+//	fmt.Printf("Общее кол-во изданий на руках у каждого читателя - ")
+//	return count, nil
+//
+//}
+//
+func countBooksEvenReader(readers map[string]map[string][]string) (count int, err error) {
+
+	var g int
+	var j int
+	for _, v := range readers {
+		for _, y := range v {
+			if len(y) != 0 {
+				j++
+				for range y {
+					g++
+					fmt.Println(g)
+				}
+			}
+
+		}
 
 	}
-	fmt.Println("Количество изданий на руках - ", i)
+	fmt.Println("Количество читателей с изданиями на руках", j)
+	count = g
+	fmt.Printf("Общее кол-во изданий на руках у каждого читателя - ")
+	return count, nil
 }
