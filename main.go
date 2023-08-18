@@ -20,7 +20,7 @@ func main() {
 func contains(slice []string, word string) bool {
 	fmt.Println("Введите строку:")
 	fmt.Scan(&word)
-	x := 0
+	//x := 0
 	z := word
 	var ok bool
 	for i := 0; i < len(slice); i++ {
@@ -28,10 +28,6 @@ func contains(slice []string, word string) bool {
 			ok = true
 			break
 		}
-		if x == len(slice) {
-			return ok
-		}
-
 	}
 	return ok
 }
