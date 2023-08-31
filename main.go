@@ -25,8 +25,8 @@ func main() {
 	i := 1
 	s := bufio.NewScanner(inFile)
 	for s.Scan() {
-		j := strconv.Itoa(i)
-		outFile.WriteString(j)
+		number := strconv.Itoa(i)
+		outFile.WriteString(number)
 		outFile.WriteString("  ")
 		outFile.WriteString(s.Text())
 		outFile.WriteString("\n")
