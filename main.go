@@ -1,36 +1,44 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"log"
-
 	"os"
+	"strconv"
+	"time"
 )
 
 func main() {
-	a := make([]byte, 0, 0)
-	ReadFile(a)
-	fmt.Println(string(a))
 
-}
-
-func ReadFile([]byte) []byte {
-
-	fileData, er := os.ReadFile("06_task_in")
-	if er != nil {
-		log.Fatal()
-		fmt.Println("File not opend")
-	}
-	fmt.Println(string(fileData))
-	return fileData
-}
-
-func WriteFile() {
-
-	data := []byte("Текст")
-	err := os.WriteFile("Tex.txt", data, 0600)
+	defer executionTime()()
+	inFile, err := os.Open("06_task_in.txt")
 	if err != nil {
-		log.Fatal()
-		fmt.Println("File not create")
+		log.Fatal("Не найден файл")
+	}
+	defer inFile.Close()
+	outFile, er := os.Create("Out.txt")
+	if er != nil {
+		log.Fatal("Ошибка создания или открытия файла")
+		return
+	} else if outFile == nil {
+	}
+	defer outFile.Close()
+	i := 1
+	s := bufio.NewScanner(inFile)
+	for s.Scan() {
+		j := strconv.Itoa(i)
+		outFile.WriteString(j)
+		outFile.WriteString("  ")
+		outFile.WriteString(s.Text())
+		outFile.WriteString("\n")
+		i++
+	}
+}
+func executionTime() func() {
+	startTime := time.Now()
+	return func() {
+		elapsedTime := time.Since(startTime)
+		fmt.Printf("Функция выполнилась за %v\n", elapsedTime)
 	}
 }
