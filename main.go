@@ -20,18 +20,14 @@ func main() {
 func contains(slice []string, word string) bool {
 	fmt.Println("Введите строку:")
 	fmt.Scan(&word)
-	//x := 0
-	z := word
-	var ok bool
 	for i := 0; i < len(slice); i++ {
-		if slice[i] == z {
-			ok = true
-			break
+		if slice[i] == word {
+			return true
 		}
 	}
-	return ok
-}
+	return false
 
+}
 func getMax(args ...int) int {
 	var d int
 	var j int
