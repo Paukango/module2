@@ -20,8 +20,6 @@ func main() {
 	outFile, er := os.Create("Out.txt")
 	if er != nil {
 		log.Fatal("Ошибка создания или открытия файла")
-		return
-	} else if outFile == nil {
 	}
 	defer outFile.Close()
 	i := 1
