@@ -1,44 +1,67 @@
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strings"
+)
 
 func main() {
-
-	slice := []string{"Один", "Два", "Три"}
-	s := []int{0, 2, 0, 0, 1}
-	var (
-		word string
-		ok   bool
-	)
-	ok = contains(slice, word)
-	fmt.Println(ok)
-	//--------------------
-	maxArg := getMax(s...)
-	fmt.Println("Максимальное число = ", maxArg)
-}
-
-func contains(slice []string, word string) bool {
-	fmt.Println("Введите строку:")
-	fmt.Scan(&word)
-	for i := 0; i < len(slice); i++ {
-		if slice[i] == word {
-			return true
-		}
+	// Открываем файл для чтения
+	file, err := os.Open("data/07_task_in.txt")
+	if err != nil {
+		fmt.Println("Ошибка при открытии файла:", err)
+		return
 	}
-	return false
+	defer file.Close()
 
-}
-func getMax(args ...int) int {
-	var d int
-	var j int
-	for i := range args {
-		x := args[i]
-		if x >= d {
-			j = x
-		} else if x < d {
-			continue
-		}
-		d = x
+	fileOut, err := os.Create("data/data_out.txt")
+	if err != nil {
+		fmt.Println("Ошибка при создании или открытии файла:", err)
+		return
 	}
-	return j
+	defer file.Close()
+
+	defer func() {
+		fileOut, err := os.Open("data/data_out.txt")
+		if err != nil {
+			fmt.Println("Ошибка при создании или открытии файла:", err)
+			return
+		}
+		scan := bufio.NewScanner(fileOut)
+		for scan.Scan() {
+			scanFile := scan.Text()
+			fmt.Println(scanFile)
+		}
+	}()
+
+	// Создаем сканер для чтения из файла
+	scanner := bufio.NewScanner(file)
+	var stringNum int
+
+	for scanner.Scan() {
+		workSt := scanner.Text()
+		workSlice := strings.SplitN(workSt, "|", 3)
+
+		stringNum++
+
+		name := workSlice[0]
+		address := workSlice[1]
+		city := workSlice[2]
+
+		stringOut := fmt.Sprintf("Row: %d\nName: %s\nAddress: %s\nCity: %s\n\n\n", stringNum, name, address, city)
+
+		fileOut.WriteString(stringOut)
+
+		for _, word := range workSlice {
+			if word == "" {
+				err := fmt.Sprintf("parse error: empty field on string %d", stringNum)
+				panic(err)
+			}
+
+		}
+
+	}
+
 }
