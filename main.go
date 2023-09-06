@@ -3,9 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"io"
 	"os"
-	"strings"
 )
 
 func main() {
@@ -14,27 +12,22 @@ func main() {
 	if err != nil {
 		fmt.Println("ошибка открытия файла")
 	}
-	defer fileOpen.Close().Error()
+
+	defer fileOpen.Close()
+
+	defer func() {
+		if cerr := fileOpen.Close(); cerr != nil {
+			fmt.Println("Ошибка при закрытии файла:", cerr)
+		}
+	}()
 
 	var i int
-	buffer := make([]byte, 20)
 	scanFile := bufio.NewScanner(fileOpen)
-	reader := strings.NewReader(scanFile.Text())
-
 	for scanFile.Scan() {
 		i++
-		_, err := reader.Read(buffer)
-		if err == io.EOF {
-
-			break
+		if scanFile.Err() != nil {
+			fmt.Println("Ошибка при сканировании файла:", scanFile.Err())
 		}
-		if err != nil {
-			fmt.Printf("Ошибка чтения: %v\n", err)
-			break
-		}
-
-		fmt.Println(reader)
-
 	}
-	fmt.Printf("Total strings:%d", i)
+	fmt.Printf("\nTotal strings:%d\n", i)
 }
