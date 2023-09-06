@@ -23,6 +23,8 @@ func main() {
 		reader := scanFile.Text()
 		fmt.Println(reader)
 		outFile.WriteString(scanFile.Text())
+		outFile.WriteString("\n")
+
 	}
 
 }
