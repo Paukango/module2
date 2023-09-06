@@ -17,14 +17,17 @@ func main() {
 	if err != nil {
 		fmt.Println("ошибка создания файла")
 	}
-
+	var i int
 	scanFile := bufio.NewScanner(fileOpen)
 	for scanFile.Scan() {
 		reader := scanFile.Text()
+		i++
 		fmt.Println(reader)
-		outFile.WriteString(scanFile.Text())
-		outFile.WriteString("\n")
 
+		if reader != "" {
+			outFile.WriteString(scanFile.Text())
+			outFile.WriteString("\n")
+		}
 	}
-
+	fmt.Println(i)
 }
