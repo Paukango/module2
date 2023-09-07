@@ -38,7 +38,7 @@ func main() {
 		if err == io.EOF {
 			break
 		}
-		fmt.Println("Количество строк - ", j)
+		fmt.Printf("Total strings: %d", j)
 	}
 }
 
@@ -49,6 +49,13 @@ func fileLen() int {
 		panic("Open error")
 	}
 	defer in.Close()
+
+	defer func() {
+		if cerr := in.Close(); cerr != nil {
+			fmt.Println("Ошибка при закрытии файла:", cerr)
+		}
+	}()
+
 	scanner := bufio.NewScanner(in)
 	var predLen int
 	var sumLen int
