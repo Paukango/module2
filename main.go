@@ -3,31 +3,60 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"os"
+	"strings"
 )
 
 func main() {
 
-	fileOpen, err := os.Open("data/in.txt")
+	in, err := os.Open("data/in.txt")
 	if err != nil {
-		fmt.Println("ошибка открытия файла")
+		panic("Open error")
 	}
-
-	defer fileOpen.Close()
+	defer in.Close()
 
 	defer func() {
-		if cerr := fileOpen.Close(); cerr != nil {
+		if cerr := in.Close(); cerr != nil {
 			fmt.Println("Ошибка при закрытии файла:", cerr)
 		}
 	}()
 
-	var i int
-	scanFile := bufio.NewScanner(fileOpen)
-	for scanFile.Scan() {
-		i++
-		if scanFile.Err() != nil {
-			fmt.Println("Ошибка при сканировании файла:", scanFile.Err())
+	sum := fileLen()
+	data := make([]byte, sum)
+	var j int = 0
+
+	for err != io.EOF {
+		n, err := in.Read(data)
+		str := fmt.Sprintf(string(data[:n]))
+		strSplt := strings.Split(str, "\n")
+		for _, Word := range strSplt {
+			if Word != "" {
+				j++
+			}
 		}
+		if err == io.EOF {
+			break
+		}
+		fmt.Println("Количество строк - ", j)
 	}
-	fmt.Printf("\nTotal strings:%d\n", i)
+}
+
+// Подсчет символов в файле
+func fileLen() int {
+	in, err := os.Open("data/in.txt")
+	if err != nil {
+		panic("Open error")
+	}
+	defer in.Close()
+	scanner := bufio.NewScanner(in)
+	var predLen int
+	var sumLen int
+	for scanner.Scan() {
+		strng := scanner.Text()
+		lenStr := len(strng)
+		sumLen = sumLen + predLen + lenStr
+		predLen = lenStr
+	}
+	return sumLen
 }
