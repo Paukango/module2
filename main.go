@@ -24,8 +24,7 @@ func main() {
 
 	sum := fileLen()
 	data := make([]byte, sum)
-	var j int = 0
-
+	var j int
 	for err != io.EOF {
 		n, err := in.Read(data)
 		str := fmt.Sprintf(string(data[:n]))
