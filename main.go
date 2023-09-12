@@ -14,7 +14,6 @@ func main() {
 	if err != nil {
 		panic("Open error")
 	}
-	defer in.Close()
 
 	defer func() {
 		if cerr := in.Close(); cerr != nil {
@@ -47,7 +46,6 @@ func fileLen() int {
 	if err != nil {
 		panic("Open error")
 	}
-	defer in.Close()
 
 	defer func() {
 		if cerr := in.Close(); cerr != nil {
